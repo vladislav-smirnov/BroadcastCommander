@@ -58,7 +58,7 @@ jobs:
       - name: Show local.properties
         run: cat local.properties
       - name: Upload library
-        run: bash ./gradlew :appsignverifier:publishReleasePublicationToMavenCentralRepository --stacktrace
+        run: bash ./gradlew :broadcastcommander:publishReleasePublicationToMavenCentralRepository --stacktrace
         env:
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_SIGNING_KEY_PASSWORD }}
