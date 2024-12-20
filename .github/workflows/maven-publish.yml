@@ -48,8 +48,6 @@ jobs:
 
       - name: Show original gradle.properties
         run: cat gradle.properties
-      - name: Set version
-        run: mvn versions:set -DnewVersion=${{ github.event.release.tag_name }}
       - name: Set version_name dynamically
         run: |
                 TAG_NAME="${{ github.event.release.tag_name }}"
