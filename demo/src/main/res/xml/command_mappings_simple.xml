@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<commands>
+    <command
+        action="SIMPLE_ACTION_COMMAND_BUNDLE"
+        handler="io.github.airdaydreamers.broadcastcommander.demo.usecases.SimpleCommandUseCase"
+        type="android.os.Bundle" />
+</commands>

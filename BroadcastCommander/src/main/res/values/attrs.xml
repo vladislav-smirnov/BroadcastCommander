@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="command" format="string"/>
+    <attr name="className" format="string"/>
+
+    <declare-styleable name="commandItems"/>
+    <declare-styleable name="commandItems_item">
+        <attr name="type">
+            <enum name="Boolean" value="0"/>
+            <enum name="String" value="1"/>
+            <enum name="Int" value="2"/>
+            <enum name="Bundle" value="3"/>
+            <enum name="Callback" value="4"/>
+        </attr>
+
+        <attr name="command"/>
+        <attr name="className"/>
+    </declare-styleable>
+</resources>
