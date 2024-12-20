@@ -1,4 +1,5 @@
 # BroadcastCommander
+![Maven Central Version](https://img.shields.io/maven-central/v/io.github.airdaydreamers.broadcastcommander/broadcastcommander) | [![CI](https://github.com/vladislav-smirnov/BroadcastCommander/actions/workflows/gradle.yml/badge.svg)](https://github.com/vladislav-smirnov/BroadcastCommander/actions/workflows/gradle.yml)
 
 A lightweight Android library for handling broadcast commands with ease through XML configuration.
 
