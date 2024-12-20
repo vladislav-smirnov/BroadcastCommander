@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<commandItems xmlns:lib="http://schemas.android.com/apk/res-auto">
+    <item
+        lib:className="io.github.airdaydreamers.broadcastcommander.demo.usecases.CommandUseCase"
+        lib:command="ACTION_COMMAND_BUNDLE"
+        lib:type="Bundle" />
+</commandItems>
