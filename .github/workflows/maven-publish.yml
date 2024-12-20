@@ -1,0 +1,70 @@
+name: Publish package to the Maven Central Repository
+on:
+  release:
+    types: [created]
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 21
+
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Build aar
+        run: ./gradlew build
+
+  publish:
+    environment:
+      name: "MavenCentral"
+    needs: Build
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
+      # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+
+      - name: Show original gradle.properties
+        run: cat gradle.properties
+      - name: Set version
+        run: mvn versions:set -DnewVersion=${{ github.event.release.tag_name }}
+      - name: Set version_name dynamically
+        run: |
+                TAG_NAME="${{ github.event.release.tag_name }}"
+                VERSION_NAME="${TAG_NAME:1}" # Remove the first character
+                echo "VERSION_NAME=${VERSION_NAME}" > local.properties
+#      - name: Update version in local.properties
+#        run: echo "VERSION_NAME=${{ github.event.release.tag_name }}" > local.properties
+      - name: Show local.properties
+        run: cat local.properties
+      - name: Upload library
+        run: bash ./gradlew :appsignverifier:publishReleasePublicationToMavenCentralRepository --stacktrace
+        env:
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_SIGNING_KEY_PASSWORD }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.CENTRAL_TOKEN_PASSWORD}}
+          SONATYPE_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD}}
